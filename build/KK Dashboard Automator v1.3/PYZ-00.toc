@@ -1,5 +1,5 @@
-('D:\\바탕화면\\\u3000\u3000\u3000\u3000\\KK Dashboard Automator v1.3 '
- 'build\\build\\KK Dashboard Automator v1.3\\PYZ-00.pyz',
+('D:\\바탕화면\\\u3000\u3000\u3000\u3000\\KK Dashboard Automator v1.3\\build\\KK '
+ 'Dashboard Automator v1.3\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\Daeho_Hwang\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\PIL\\__init__.py',
    'PYMODULE'),

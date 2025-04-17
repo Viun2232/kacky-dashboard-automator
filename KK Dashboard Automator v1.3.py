@@ -37,6 +37,11 @@ REQUIREMENTS_PATH = os.path.join(BASE_DIR, "requirements.txt")
 FIRST_RUN_FLAG_PATH = os.path.join(BASE_DIR, "first_run.flag")
 FRIENDS_PATH = os.path.join(BASE_DIR, "friends.ini")
 
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(__file__)
+
 LOGO_PATH = os.path.join(BASE_DIR, "logo.png")
 ICON_PATH = os.path.join(BASE_DIR, "KDA.ico")
 LANG_IMG_PATH = os.path.join(BASE_DIR, "lang.png")
@@ -385,6 +390,8 @@ def get_username():
                 username_display_label.configure(state="disabled")
         else:
             username_display_label.insert(tk.END, "Not set")
+            username_display_label.tag_add("center", "1.0", "end")
+            username_display_label.tag_configure("center", justify="center")
 
         username_display_label.configure(state="disabled")
 
