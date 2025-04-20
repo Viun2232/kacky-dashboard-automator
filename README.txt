@@ -2,8 +2,7 @@
 
 Python must be installed. (https://www.python.org)
 !!! DONT FORGET to check "Add Python 3.xx to PATH" when you install python.
-You must install the **required libraries** on the first run.  
-Chrome must be up to date.  
+If some features do not work properly, try pressing the **Install Requirements** button.
 
 ========================================  
 
@@ -38,9 +37,7 @@ https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?usp=sharing
 
 ========================================  
 
-3. Click the script execution button.  
-
-# On the first run, click the **Install Required Libraries** button.  
+3. Click the run button.
 
 
 
@@ -48,8 +45,7 @@ https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?usp=sharing
 
 Python이 설치되어 있어야 합니다. (https://www.python.org)
 !!! Python을 설치할 때 "Python 3.xx를 PATH에 추가"를 체크하는 것을 잊지 마세요.
-첫 실행 시 꼭 **필수 라이브러리**를 설치해야 합니다.
-Chrome이 최신 버전이어야 합니다.
+일부 기능이 제대로 작동하지 않으면 **필수 라이브러리 설치** 버튼을 눌러보세요.
 
 ========================================
 
@@ -84,6 +80,6 @@ https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?usp=sharing
 
 ========================================
 
-3. 스크립트 실행 버튼을 누르세요.
+3. 실행 버튼을 누르세요.
 
 # 첫 실행 시 필수 라이브러리 설치 버튼을 누르세요.
