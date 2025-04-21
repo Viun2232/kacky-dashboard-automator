@@ -386,10 +386,11 @@ def fetch_player_data(pid, include_time=False):
 
                 # 내 기록: 기존 기록 비교
                 old = existing_records.get(map_name)
-                if not old or old[1] != rank:
-                    update_targets.append((map_name, map_uid, rank, old))
+                if not old:
+                    update_targets.append((map_name, map_uid, rank, None))
                 else:
-                    all_records.append((map_name, old[0], old[1]))
+                    old_time, old_rank = old
+                    update_targets.append((map_name, map_uid, rank, old)) if old_rank != rank or old_time == "0" else all_records.append((map_name, old_time, old_rank))
 
         if include_time:
             log_message("map_uid_collected", count=len(update_targets))
@@ -401,7 +402,7 @@ def fetch_player_data(pid, include_time=False):
                     log_message("accessing", url=detail_url)
                     record = fetch_record_time(pid, map_uid)
                     best_time = record["time"]
-                    current_rank = str(record["rank"])
+                    current_rank = rank
 
                     if old and old[0] == best_time:
                         log_message("record_same", map_name=map_name)
@@ -409,6 +410,7 @@ def fetch_player_data(pid, include_time=False):
                         log_message("record_updated", map_name=map_name, best_time=best_time, current_rank=current_rank)
 
                     all_records.append((map_name, best_time, current_rank))
+
                 except Exception as e:
                     log_message("record_not_found", map_name=map_name, error=e)
                     if old:
@@ -675,7 +677,7 @@ def check_list():
         "Content-Type": "application/json"
     }
 
-    webhook_url = "https://script.google.com/macros/s/AKfycbxHHq_QxnkQb3MNqxITXIjKxfw16kbuPCxVrXYK5xLSLSd2lh1P2KZZUa7Dx5kBsg/exec"
+    webhook_url = "https://script.google.com/macros/s/AKfycbyQsuyDAC-hwbrFuuOWu4uL8FNl1ryKgMuGFeqCoXZvtweCSlX_nj1zyfS4sGeERbGK/exec"
 
     response = requests.post(webhook_url, json=payload, headers=headers)  # headers 추가
 
