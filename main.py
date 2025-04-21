@@ -1,4 +1,4 @@
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox
@@ -41,74 +41,6 @@ LOGO_PATH = os.path.join(BASE_DIR, "logo.png")
 ICON_PATH = os.path.join(BASE_DIR, "KDA.ico")
 LANG_IMG_PATH = os.path.join(BASE_DIR, "lang.png")
 STOP_IMG_PATH = os.path.join(BASE_DIR, "stop.png")
-
-# 최초 실행 확인
-def check_first_run_setup():
-    if os.path.exists("first_run.flag"):
-        log_message("first_run")
-        check_environment()
-        os.remove("first_run.flag")  # 최초 실행 플래그 제거
-        log_message("all_components_installed")
-
-def check_environment():
-    log_message("start_env_check")
-
-    python_in_path = shutil.which("python") or shutil.which("python3")
-    current_python_path = sys.executable
-
-    log_message("current_python", current_python_path=current_python_path)
-
-    if python_in_path:
-        log_message("python_in_path", python_in_path=python_in_path)
-    else:
-        log_message("python_not_found")
-        log_message("how_to_fix")
-        log_message("fix_step_1")
-        log_message("fix_step_2")
-        log_message("fix_step_3")
-        log_message("fix_step_4")
-        log_message(f"   {os.path.dirname(current_python_path)}")
-        log_message("fix_reminder")
-
-    req_path = os.path.join(BASE_DIR, "requirements.txt")
-    missing = []
-
-    if not os.path.exists(req_path):
-        log_message("requirements_missing")
-        return
-
-    import_name_map = {
-        "beautifulsoup4": "bs4",
-        "pillow": "PIL",
-        "webdriver-manager": "webdriver_manager"
-    }
-
-    with open(req_path, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            pip_pkg = line.split("==")[0]
-            import_name = import_name_map.get(pip_pkg, pip_pkg.replace("-", "_"))
-            try:
-                importlib.import_module(import_name)
-            except ImportError:
-                missing.append(line)
-
-    if missing:
-        log_message("missing_libraries")
-        for m in missing:
-            log_message(f" - {m}")
-        log_message("installing_missing")
-        try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install"] + missing)
-            log_message("missing_installed")
-        except Exception as e:
-            log_message("install_failed", e=e)
-    else:
-        log_message("all_installed")
-
-    log_message("env_check_complete")
 
 # config.ini 파일 로드
 def load_config():
@@ -552,59 +484,6 @@ def get_username():
             username_display_label.tag_configure("center", justify="center")
 
         username_display_label.configure(state="disabled")
-
-def install_requirements():
-    """필수 라이브러리를 설치하는 함수 (한글 경로 깨짐 방지)"""
-    log_message("installing_libraries")
-
-    requirements_path = os.path.join(BASE_DIR, REQUIREMENTS_PATH)
-
-    if not os.path.exists(requirements_path):
-        log_message("file_not_found", file=REQUIREMENTS_PATH)
-        return
-
-    try:
-        python_exec = shutil.which("python")  # ✅ Python 실행 파일 찾기
-        if not python_exec:
-            log_message("error_occurred", error="Python 실행 파일을 찾을 수 없습니다.")
-            return
-
-        # ✅ OS에 따라 올바른 인코딩 설정 (Windows → CP949, 그 외 UTF-8)
-        encoding = "utf-8"
-        if os.name == "nt":  # Windows 환경
-            encoding = locale.getpreferredencoding()
-
-        process = subprocess.Popen(
-            [python_exec, "-m", "pip", "install", "-r", requirements_path],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            text=True, encoding=encoding, errors="replace",  # ✅ 한글 깨짐 방지
-            bufsize=1, universal_newlines=True,  # ✅ 실시간 출력 활성화
-            creationflags=subprocess.CREATE_NO_WINDOW  # ✅ 콘솔 창 숨기기
-        )
-
-        # stdout과 stderr 실시간 로그 출력
-        while True:
-            output = process.stdout.readline()
-            if output == "" and process.poll() is not None:
-                break
-            if output:
-                log_message("install_output", output=output.strip())
-
-        while True:
-            error_output = process.stderr.readline()
-            if error_output == "" and process.poll() is not None:
-                break
-            if error_output:
-                log_message("error_occurred", error=error_output.strip())
-
-        process.stdout.close()
-        process.stderr.close()
-        process.wait()
-
-        log_message("installation_complete")
-
-    except Exception as e:
-        log_message("error_occurred", error=str(e))
 
 running_process = None  # 실행 중인 프로세스를 저장할 변수
 
@@ -1466,7 +1345,6 @@ def switch_language():
     pid_label.config(text=translations[current_language]["pid_label"])
     sheet_label.config(text=translations[current_language]["sheet_label"])
     save_btn.config(text=translations[current_language]["save_btn"])
-    install_btn.config(text=translations[current_language]["install_btn"])
     run_btn.config(text=translations[current_language]["run_btn"])
     help_btn.config(text=translations[current_language]["help_btn"])
     user_page_btn.config(text=translations[current_language]["user_page_btn"])
@@ -1611,7 +1489,7 @@ root = tk.Tk()
 load_window_position()
 load_shortcuts()
 root.title(translations[current_language]["title"])
-root.geometry("820x417")
+root.geometry("820x382")
 
 # 창 아이콘 변경
 if os.path.exists(ICON_PATH):
@@ -1694,11 +1572,8 @@ lis_btn.grid(row=8, column=0, columnspan=2, pady=5)
 friend_list_btn = ttk.Button(top_frame, text=translations[current_language]["friend_list_btn"], command=open_friend_list, width=18)
 friend_list_btn.grid(row=9, column=0, columnspan=2, pady=5)
 
-install_btn = ttk.Button(top_frame, text=translations[current_language]["install_btn"], command=install_requirements, width=18)
-install_btn.grid(row=10, column=0, columnspan=2, pady=5)
-
 help_btn = ttk.Button(top_frame, text=translations[current_language]["help_btn"], command=open_readme, width=18)
-help_btn.grid(row=11, column=0, columnspan=2, pady=5)
+help_btn.grid(row=10, column=0, columnspan=2, pady=5)
 
 lang_btn = ttk.Button(root, image=lang_img, command=switch_language)
 position_bottom_left(lang_btn, x_offset=10, y_offset=44)
@@ -1713,9 +1588,6 @@ log_text = scrolledtext.ScrolledText(root, height=20, width=70, state="normal")
 log_text.grid(row=0, column=1, sticky="nsew", padx=10, pady=5)
 root.columnconfigure(1, weight=1)  # 로그 창이 가변적으로 늘어나도록 설정
 root.rowconfigure(0, weight=1)
-
-# 첫 실행 상태 확인
-check_first_run_setup()
 
 root.protocol("WM_DELETE_WINDOW", on_exit)
 

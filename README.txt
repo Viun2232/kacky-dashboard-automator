@@ -1,7 +1,5 @@
 ///////////////////////////ENG_README///////////////////////////
 
-Python must be installed. (https://www.python.org)
-!!! DONT FORGET to check "Add Python 3.xx to PATH" when you install python.
 If some features do not work properly, try pressing the **Install Requirements** button.
 
 ========================================  
@@ -43,8 +41,6 @@ https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?usp=sharing
 
 ///////////////////////////KOR_README///////////////////////////
 
-Python이 설치되어 있어야 합니다. (https://www.python.org)
-!!! Python을 설치할 때 "Python 3.xx를 PATH에 추가"를 체크하는 것을 잊지 마세요.
 일부 기능이 제대로 작동하지 않으면 **필수 라이브러리 설치** 버튼을 눌러보세요.
 
 ========================================
