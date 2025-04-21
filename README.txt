@@ -1,9 +1,5 @@
 ///////////////////////////ENG_README///////////////////////////
 
-If some features do not work properly, try pressing the **Install Requirements** button.
-
-========================================  
-
 1. Get the pid  
 
 # Go to the Kackiest Kacky website and search for your nickname (or find it manually)  
@@ -40,10 +36,6 @@ https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?usp=sharing
 
 
 ///////////////////////////KOR_README///////////////////////////
-
-일부 기능이 제대로 작동하지 않으면 **필수 라이브러리 설치** 버튼을 눌러보세요.
-
-========================================
 
 1. pid 가져오기
 
