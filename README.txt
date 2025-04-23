@@ -69,5 +69,3 @@ https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?usp=sharing
 ========================================
 
 3. 실행 버튼을 누르세요.
-
-# 첫 실행 시 필수 라이브러리 설치 버튼을 누르세요.
